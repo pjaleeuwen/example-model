@@ -4,12 +4,13 @@ import (
 	"testing"
 )
 
-func TestMain(m *testing.M) {
+func Before() {
 	properties = nil
-	m.Run()
 }
 
 func TestNewPropertyReturnsNewProperty(t *testing.T) {
+	Before()
+
 	someName := "Some property name"
 	property := NewProperty(someName)
 
@@ -35,10 +36,12 @@ func TestNewPropertyReturnsNewProperty(t *testing.T) {
 }
 
 func TestSavePropertyStoresPropertyInProperties(t *testing.T) {
+	Before()
+
 	someName := "Some property name"
 	given := NewProperty(someName)
 
-	SaveProperty(given)
+	_ = SaveProperty(given)
 
 	result := properties[given.UUID]
 	if result == nil {
@@ -51,10 +54,12 @@ func TestSavePropertyStoresPropertyInProperties(t *testing.T) {
 }
 
 func TestGetPropertyReturnsProperty(t *testing.T) {
+	Before()
+
 	someName := "Some property name"
 	given := NewProperty(someName)
 
-	SaveProperty(given)
+	_ = SaveProperty(given)
 
 	result, err := GetProperty(given.UUID)
 	if err != nil {
@@ -71,17 +76,21 @@ func TestGetPropertyReturnsProperty(t *testing.T) {
 }
 
 func TestGetPropertyWithInvalidUUIDReturnsError(t *testing.T) {
+	Before()
+
 	_, err := GetProperty("abc")
-	if err != PropertyNotFoundError {
-		t.Fatalf("Expected %v, got %v", PropertyNotFoundError, err)
+	if err != ErrPropertyNotFound {
+		t.Fatalf("Expected %v, got %v", ErrPropertyNotFound, err)
 	}
 }
 
 func TestGetPropertiesReturnAllProperties(t *testing.T) {
+	Before()
+
 	someName := "Some property name"
-	SaveProperty(NewProperty(someName + "1"))
-	SaveProperty(NewProperty(someName + "2"))
-	SaveProperty(NewProperty(someName + "3"))
+	_ = SaveProperty(NewProperty(someName + "1"))
+	_ = SaveProperty(NewProperty(someName + "2"))
+	_ = SaveProperty(NewProperty(someName + "3"))
 
 	result := GetAllProperties()
 
