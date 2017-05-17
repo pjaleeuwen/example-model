@@ -4,10 +4,6 @@ import (
 	"testing"
 )
 
-func Before() {
-	properties = nil
-}
-
 func TestNewPropertyReturnsNewProperty(t *testing.T) {
 	Before()
 

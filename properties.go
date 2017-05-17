@@ -20,7 +20,7 @@ func NewProperty(name string) *Property {
 	return &Property{
 		UUID:  uuid.NewV4().String(),
 		Name:  name,
-		Rooms: make(map[int]*Room),
+		Rooms: make(map[string]*Room),
 	}
 }
 
@@ -66,19 +66,5 @@ func initProperties() {
 type Property struct {
 	UUID  string
 	Name  string
-	Rooms map[int]*Room
-}
-
-// Room contains data together form the concept of a room (i.e. Hotel-room).
-type Room struct {
-	UUID     string
-	Number   string
-	Capacity *Capacity
-}
-
-// Capacity contains data about the capacity of a physical place (i.e. the capacity of a hotel-room).
-type Capacity struct {
-	Kids   int
-	Adults int
-	Total  int
+	Rooms map[string]*Room
 }
